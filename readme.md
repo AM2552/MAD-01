@@ -9,17 +9,58 @@
 ## Questions
 ### Describe how Kotlin handles null safety. What are nullable types and non-null types in Kotlin? (0,5 points)
 
-<span style="color:blue">Provide your answer here! </span>
-> Note: you can also use code snippets to illustrate your answer. 
+### Answer:
+> 
+> Kotlin's type system distinguishes between references that can or cannot hold 'null' as a value
+> --> nullable and non-nullable types.
+> 
+> By default, every declared variable is non-nullable.
+> If a variable should be able to hold 'null', it must be declared with a '?'.
+> 
 
-```kotlin 
-// example code snippet
-val a: String = "value" // non-null type
+```kotlin
+val a: String = "non-nullable" // declared as a default non-null type
+a = null // will result in a compilation error
+val b: String? = "nullable" // declared as a potential null-holder
+b = null // ok
 ```
 
 ### What are lambda expressions and higher order functions in Kotlin? Why would you store a function inside a variable? (0,5 points)
 
-<span style="color:blue">Provide your answer here!</span>
+### Answer:
+
+> Lambda expressions are essentially anonymous functions, as they don't have a name unless assigned to a variable.
+> They are generally more concise than regular functions, making them ideal for short operations or passing functions as arguments.
+>
+> I can store a function in a variable to pass it around as a parameter, to delay its execution, or to compose complex operations from simpler ones.
+```kotlin
+// Lambda expressions to perform two (short) mathematical operations
+val isOdd: (Int) -> Boolean = { it % 2 != 0 }
+val add: (Int, Int) -> Int = { a, b -> a * b }
+```
+
+> Higher-order functions take functions as parameters, or return a function.
+
+```kotlin
+// Higher-Order function that takes previous lambdas as parameters to perform their functionality on 'numbers'
+fun processNumbers(
+    numbers: List<Int>,
+    predicate: (Int) -> Boolean,
+    transform: (Int, Int) -> Int
+): Int {
+    return numbers.filter(predicate).map(transform).sum()
+}
+
+// Now we can combine both concepts
+fun main() {
+    val numbers = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+    val result = processNumbers(numbers, isOdd, add)
+    println("The sum of the odd numbers is: $result")
+}
+```
+
+
+
 
 ### Provide a solution for the following number guessing game inside `App.kt`. (3 points)
 
